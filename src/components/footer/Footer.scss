@@ -1,0 +1,19 @@
+#footer {
+  height: 50%;
+
+  .footer-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+
+    img {
+      width: 128px;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}
