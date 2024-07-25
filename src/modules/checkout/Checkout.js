@@ -25,13 +25,22 @@ export default function Checkout() {
 
   const handlePayNow = () => {
     if (cart.length) {
-      alert("connect to api");
+      setSnackbar((snackbar) => ({
+        ...snackbar,
+        open: true,
+        text: `Thank you!`,
+        severity: "success",
+        duration: 6000,
+      }));
+
+      setCart([]);
     } else {
       setSnackbar((snackbar) => ({
         ...snackbar,
         open: true,
         text: `Your cart is empty`,
         severity: "error",
+        duration: 6000,
       }));
     }
   };
