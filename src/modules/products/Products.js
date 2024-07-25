@@ -21,6 +21,7 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
 import "./Products.scss";
+import { duration } from "moment";
 
 const tempData = [
   {
@@ -64,22 +65,32 @@ const tempData = [
 export default function Products() {
   const { category } = useParams();
 
-  const { snackbar, setSnackbar } = useContext(Global);
+  const { snackbar, setSnackbar, userEmail, cart, setCart } =
+    useContext(Global);
 
   const [products, setProducts] = useState([]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (data) => {
+    setCart((cart) => [...cart, data]);
+
     setSnackbar((snackbar) => ({
       ...snackbar,
       open: true,
       text: `Added to cart`,
       severity: "success",
+      duration: 500,
     }));
   };
 
   useEffect(() => {
-    let result = tempData.filter((i) => i.category.toLowerCase() === category);
-    setProducts(result);
+    if (!category) {
+      setProducts(tempData);
+    } else {
+      let result = tempData.filter(
+        (i) => i.category.toLowerCase() === category
+      );
+      setProducts(result);
+    }
   }, [category]);
 
   return (
@@ -104,7 +115,12 @@ export default function Products() {
           </MenuList>
           <Grid container spacing={2}>
             <Grid item xs={12} textAlign={"right"}>
-              <Button variant="outlined" color="orange">
+              <Button
+                component={Link}
+                to="/checkout"
+                variant="outlined"
+                color="orange"
+              >
                 Checkout Now
               </Button>
             </Grid>
@@ -119,7 +135,7 @@ export default function Products() {
                     variant="contained"
                     size="small"
                     color="orange"
-                    onClick={() => handleAddToCart()}
+                    onClick={() => handleAddToCart(item)}
                   >
                     Add to Cart
                   </Button>

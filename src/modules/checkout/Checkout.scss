@@ -1,0 +1,24 @@
+#checkout {
+  padding-top: 32px;
+  padding-bottom: 32px;
+
+  .checkout-holder {
+    .card-product {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+
+      .MuiChip-root {
+        align-self: flex-end;
+      }
+
+      .MuiButton-root {
+        margin-top: 8px;
+      }
+    }
+
+    .card-actions {
+      padding: 16px;
+    }
+  }
+}

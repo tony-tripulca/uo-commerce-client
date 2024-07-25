@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import moment from "moment-timezone";
 
@@ -30,11 +30,18 @@ export default function App() {
     severity: "succes",
   });
 
+  const [userEmail, setUserEmail] = useState("");
+  const [cart, setCart] = useState([]);
+
   const globals = {
     loading,
     setLoading,
     snackbar,
     setSnackbar,
+    userEmail,
+    setUserEmail,
+    cart,
+    setCart,
   };
 
   return (
