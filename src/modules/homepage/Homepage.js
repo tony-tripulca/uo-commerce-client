@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 import { Box, Container, Typography } from "@mui/material";
 
@@ -10,10 +11,14 @@ import "./Homepage.scss";
 export default function Homepage() {
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Home | UO Store </title>
+      </Helmet>
       <Header />
       <Box component={"section"} id="homepage">
         <Container maxWidth="xl" className="homepage-holder">
-          <Typography>Homepage</Typography>
+          <Typography className="lead">Welcome to UO Store!</Typography>
+          <Typography>Get the best product anywhere, anytime.</Typography>
         </Container>
       </Box>
       <Footer />

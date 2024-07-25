@@ -9,7 +9,7 @@
     height: 64px;
 
     .main-logo {
-      width: 128px;
+      width: 64px;
     }
 
     .MuiList-root {
@@ -20,6 +20,16 @@
           text-decoration: none;
           color: black;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  #header {
+    .header-holder {
+      .main-logo {
+        width: 128px;
       }
     }
   }

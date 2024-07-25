@@ -21,7 +21,7 @@ export default function Header() {
               <Link to="/">Home</Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/">Products</Link>
+              <Link to="/products">Products</Link>
             </MenuItem>
             <MenuItem>
               <Link to="/">My Cart</Link>

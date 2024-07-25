@@ -1,4 +1,16 @@
 #homepage {
+  height: calc(50% - 128px);
   padding-top: 32px;
   padding-bottom: 32px;
+
+  .homepage-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .lead {
+      font-size: 1.8rem;
+    }
+  }
 }

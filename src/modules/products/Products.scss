@@ -1,0 +1,41 @@
+#products {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  .products-holder {
+    .menu-label {
+      font-size: 0.8rem;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .MuiList-root {
+      display: flex;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      padding: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+      .MuiMenuItem-root {
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+    }
+
+    .card-product {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+
+      .MuiChip-root {
+        align-self: flex-end;
+      }
+
+      .MuiButton-root {
+        margin-top: 8px;
+      }
+    }
+  }
+}
