@@ -16,7 +16,11 @@
       display: flex;
 
       .MuiMenuItem-root {
+        padding: 0;
+
         a {
+          display: block;
+          padding: 8px 16px;
           text-decoration: none;
           color: black;
         }

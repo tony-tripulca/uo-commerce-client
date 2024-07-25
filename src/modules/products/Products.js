@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import {
@@ -22,7 +22,48 @@ import Footer from "../../components/footer/Footer";
 
 import "./Products.scss";
 
+const tempData = [
+  {
+    id: 1,
+    name: "Lounge Chair",
+    price: 2000,
+    category: "Chairs",
+  },
+  {
+    id: 2,
+    name: "Dining Chair",
+    price: 1800,
+    category: "Chairs",
+  },
+  {
+    id: 3,
+    name: "Table1",
+    price: 3000,
+    category: "Tables",
+  },
+  {
+    id: 4,
+    name: "Table2",
+    price: 3200,
+    category: "Tables",
+  },
+  {
+    id: 5,
+    name: "Table3",
+    price: 3100,
+    category: "Tables",
+  },
+  {
+    id: 5,
+    name: "Dining Top",
+    price: 900,
+    category: "Tops",
+  },
+];
+
 export default function Products() {
+  const { category } = useParams();
+
   const { snackbar, setSnackbar } = useContext(Global);
 
   const [products, setProducts] = useState([]);
@@ -37,45 +78,9 @@ export default function Products() {
   };
 
   useEffect(() => {
-    setProducts([
-      {
-        id: 1,
-        name: "Lounge Chair",
-        price: 2000,
-        category: "Chairs",
-      },
-      {
-        id: 2,
-        name: "Dining Chair",
-        price: 1800,
-        category: "Chairs",
-      },
-      {
-        id: 3,
-        name: "Table1",
-        price: 3000,
-        category: "Table",
-      },
-      {
-        id: 4,
-        name: "Table2",
-        price: 3200,
-        category: "Table",
-      },
-      {
-        id: 5,
-        name: "Table3",
-        price: 3100,
-        category: "Table",
-      },
-      {
-        id: 5,
-        name: "Dining Top",
-        price: 900,
-        category: "Top",
-      },
-    ]);
-  }, []);
+    let result = tempData.filter((i) => i.category.toLowerCase() === category);
+    setProducts(result);
+  }, [category]);
 
   return (
     <React.Fragment>
@@ -94,7 +99,7 @@ export default function Products() {
               <Link to="/products/tables">Tables</Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/products/dining-tops">Dining Tops</Link>
+              <Link to="/products/tops">Dining Tops</Link>
             </MenuItem>
           </MenuList>
           <Grid container spacing={2}>
