@@ -64,8 +64,7 @@ const tempData = [
 export default function Products() {
   const { category } = useParams();
 
-  const { snackbar, setSnackbar, userEmail, cart, setCart } =
-    useContext(Global);
+  const { snackbar, setSnackbar, cart, setCart } = useContext(Global);
 
   const [products, setProducts] = useState([]);
 

@@ -19,21 +19,45 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
 import "./Checkout.scss";
+import UserService from "../../services/UserService";
+import { Link } from "react-router-dom";
 
 export default function Checkout() {
   const { snackbar, setSnackbar, cart, setCart } = useContext(Global);
 
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+  });
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setUser((user) => ({ ...user, [name]: value }));
+  };
+
   const handlePayNow = () => {
     if (cart.length) {
-      setSnackbar((snackbar) => ({
-        ...snackbar,
-        open: true,
-        text: `Thank you!`,
-        severity: "success",
-        duration: 6000,
-      }));
+      UserService.create(user)
+        .then(async (response) => {
+          setSnackbar((snackbar) => ({
+            ...snackbar,
+            open: true,
+            text: `Thank you!`,
+            severity: "success",
+            duration: 3000,
+          }));
 
-      setCart([]);
+          setCart([]);
+        })
+        .catch((error) => {
+          setSnackbar((snackbar) => ({
+            ...snackbar,
+            open: true,
+            text: `Oops! Something went wrong`,
+            severity: "error",
+            duration: 3000,
+          }));
+        });
     } else {
       setSnackbar((snackbar) => ({
         ...snackbar,
@@ -78,18 +102,50 @@ export default function Checkout() {
                     <Typography>Customer Details</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField variant="outlined" label="Name" size="small" />
+                    <TextField
+                      type="text"
+                      variant="outlined"
+                      label="Full name"
+                      size="small"
+                      name="name"
+                      value={user.name}
+                      onChange={(event) => handleOnChange(event)}
+                    />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button
-                      fullWidth
-                      size="small"
+                    <TextField
+                      type="email"
                       variant="outlined"
-                      color="orange"
-                      onClick={() => handlePayNow()}
-                    >
-                      Pay Now
-                    </Button>
+                      label="Email address"
+                      size="small"
+                      name="email"
+                      value={user.email}
+                      onChange={(event) => handleOnChange(event)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {cart.length ? (
+                      <Button
+                        fullWidth
+                        size="small"
+                        variant="outlined"
+                        color="orange"
+                        onClick={() => handlePayNow()}
+                      >
+                        Pay Now
+                      </Button>
+                    ) : (
+                      <Button
+                        component={Link}
+                        to="/products"
+                        fullWidth
+                        size="small"
+                        variant="outlined"
+                        color="orange"
+                      >
+                        Add Products
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
               </Paper>
