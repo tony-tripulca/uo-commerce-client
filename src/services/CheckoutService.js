@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8010";
+const url = "http://nadescrib.com:8010";
 
 export default {
   payNow: (payload) => {
