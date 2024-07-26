@@ -44,7 +44,7 @@ export default function Checkout() {
         .then(async (response) => {
           if (response.data.newUser) {
             await CheckoutService.payNow({
-              user_id: response.insertId,
+              user_id: response.data.insertId,
               amount: totalAmount,
               orders: cart,
             });
