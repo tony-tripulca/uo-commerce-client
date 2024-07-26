@@ -21,6 +21,7 @@ import Footer from "../../components/footer/Footer";
 import "./Checkout.scss";
 import UserService from "../../services/UserService";
 import { Link } from "react-router-dom";
+import CheckoutService from "../../services/CheckoutService";
 
 export default function Checkout() {
   const { snackbar, setSnackbar, cart, setCart } = useContext(Global);
@@ -29,6 +30,8 @@ export default function Checkout() {
     name: "",
     email: "",
   });
+
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -39,6 +42,20 @@ export default function Checkout() {
     if (cart.length) {
       UserService.create(user)
         .then(async (response) => {
+          if (response.data.newUser) {
+            await CheckoutService.payNow({
+              user_id: response.insertId,
+              amount: totalAmount,
+              orders: cart,
+            });
+          } else {
+            await CheckoutService.payNow({
+              user_id: response.data.id,
+              amount: totalAmount,
+              orders: cart,
+            });
+          }
+
           setSnackbar((snackbar) => ({
             ...snackbar,
             open: true,
@@ -50,10 +67,18 @@ export default function Checkout() {
           setCart([]);
         })
         .catch((error) => {
+          let msg = "";
+
+          if (error.response.status === 422) {
+            msg = "Please provide your name and email";
+          } else {
+            msg = "Oops! Something went wrong";
+          }
+
           setSnackbar((snackbar) => ({
             ...snackbar,
             open: true,
-            text: `Oops! Something went wrong`,
+            text: msg,
             severity: "error",
             duration: 3000,
           }));
@@ -68,6 +93,16 @@ export default function Checkout() {
       }));
     }
   };
+
+  useEffect(() => {
+    let total = 0;
+
+    cart.forEach((item, i) => {
+      total += item.price;
+    });
+
+    setTotalAmount(total);
+  }, []);
 
   return (
     <React.Fragment>
@@ -122,6 +157,9 @@ export default function Checkout() {
                       value={user.email}
                       onChange={(event) => handleOnChange(event)}
                     />
+                  </Grid>
+                  <Grid item xs={12} textAlign={"right"}>
+                    <Typography fontSize={24}>${totalAmount}</Typography>
                   </Grid>
                   <Grid item xs={12}>
                     {cart.length ? (
